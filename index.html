@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            My first game
+        </title>
+    </head>
+    <body>
+        <script>
+            function getComputerChoice() {
+                let choice = Math.floor(Math.random() * 3);
+                return choice;
+            }
+
+            function getHumanChoice() {
+                let choice = parseInt(prompt("Choose your item.\n1 for PAPER\n2 for ROCK\n3 for SCISSORS")) - 1;
+                return choice;
+            }
+
+            let humanScore = 0;
+            let computerScore = 0;
+
+            function playRound() {
+                let a = getHumanChoice();
+                let b = getComputerChoice();
+
+                if (a === "invalid") {
+                    console.log("Invalid choice. Please choose 1, 2, or 3.");
+                    return "Invalid round";
+                }
+
+                if ((a === 1 && b === 2) || 
+                    (a === 0 && b === 1) || 
+                    (a === 2 && b === 0)) {
+                    humanScore++;
+                    console.log("Human won this round.");
+                } else if ((b === 1 && a === 2) || 
+                        (b === 0 && a === 1) || 
+                        (b === 2 && a === 0)) {
+                    computerScore++;
+                    console.log("Computer won this round.");
+                } else {
+                    console.log("It's a tie.");
+                }
+            }
+
+            function playGame() {
+                for (let n = 0; n < 5; n++) {
+                    playRound();
+                    console.log(`Score after round ${n+1}: Human ${humanScore} - Computer ${computerScore}`);
+                }
+                if (humanScore > computerScore) {
+                    console.log("Human wins the game!");
+                } else if (computerScore > humanScore) {
+                    console.log("Computer wins the game!");
+                } else {
+                    console.log("The game is a tie!");
+                }
+            }
+
+            playGame();
+        </script>
+    </body>
+</html>
