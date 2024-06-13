@@ -6,56 +6,77 @@
         </title>
     </head>
     <body>
+        <ul>
+
+        </ul>
+
         <script>
+
             function getComputerChoice() {
                 let choice = Math.floor(Math.random() * 3);
-                return choice;
-            }
-
-            function getHumanChoice() {
-                let choice = parseInt(prompt("Choose your item.\n1 for PAPER\n2 for ROCK\n3 for SCISSORS")) - 1;
                 return choice;
             }
 
             let humanScore = 0;
             let computerScore = 0;
 
-            function playRound() {
-                let a = getHumanChoice();
+            function playRound(pick) {
+                const tabelH = document.createElement("div");
+                let a = pick;
                 let b = getComputerChoice();
 
-                if (a === "invalid") {
-                    console.log("Invalid choice. Please choose 1, 2, or 3.");
-                    return "Invalid round";
+                if ((a === 1 && b === 2) || (a === 0 && b === 1) || (a === 2 && b === 0)) {
+                    humanScore++;
+                    tabelH.textContent = "Human won this round. The score is " + humanScore + " to " + computerScore + ".";
+                } else if ((b === 1 && a === 2) || (b === 0 && a === 1) || (b === 2 && a === 0)) {
+                    computerScore++;
+                    tabelH.textContent = "Computer won this round. The score is " + humanScore + " to " + computerScore + ".";
+                } 
+                else {
+                    tabelH.textContent = "It's a tie. The score is " + humanScore + " to " + computerScore + ".";
                 }
 
-                if ((a === 1 && b === 2) || 
-                    (a === 0 && b === 1) || 
-                    (a === 2 && b === 0)) {
-                    humanScore++;
-                    console.log("Human won this round.");
-                } else if ((b === 1 && a === 2) || 
-                        (b === 0 && a === 1) || 
-                        (b === 2 && a === 0)) {
-                    computerScore++;
-                    console.log("Computer won this round.");
-                } else {
-                    console.log("It's a tie.");
+                document.body.appendChild(tabelH); 
+            
+            
+                if (computerScore == 5 || humanScore == 5) {    
+                    if (humanScore > computerScore) {
+                        tabelH.textContent = "Human won!"
+                        document.body.appendChild(tabelH); 
+                    }
+                    else {
+                        tabelH.textContent = "Computer won won!"
+                        document.body.appendChild(tabelH); 
+                    }
+                    humanScore = 0;
+                    computerScore = 0;
                 }
             }
 
             function playGame() {
-                for (let n = 0; n < 5; n++) {
-                    playRound();
-                    console.log(`Score after round ${n+1}: Human ${humanScore} - Computer ${computerScore}`);
-                }
-                if (humanScore > computerScore) {
-                    console.log("Human wins the game!");
-                } else if (computerScore > humanScore) {
-                    console.log("Computer wins the game!");
-                } else {
-                    console.log("The game is a tie!");
-                }
+
+                const list = document.querySelector("ul");
+
+
+
+                const rock = document.createElement("button");
+                rock.textContent = "Rock";
+                rock.addEventListener("click", () => playRound(1));
+                list.appendChild(rock);
+
+                const scissors = document.createElement("button");
+                scissors.textContent = "Scissors";
+                scissors.addEventListener("click", () => playRound(2));
+                list.appendChild(scissors);
+            
+                const paper = document.createElement("button");
+                paper.textContent = "Paper";
+                paper.addEventListener("click", () => playRound(0));
+                list.appendChild(paper);
+
+
+
+
             }
 
             playGame();
